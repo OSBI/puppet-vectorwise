@@ -1,0 +1,27 @@
+{
+  "name": "Analytical Labs-vectorwise",
+  "author": "Tom Barber",
+  "description": "",
+  "license": "",
+  "project_page": "",
+  "source": "",
+  "summary": "",
+  "version": "1.0",
+  "checksums": {
+    "Modulefile": "1bdd9d892ca05f80fcfd2a703c063383",
+    "README": "e36e264043e3ec58b39e9d8ceb69e7c6",
+    "files/ingbuildscript.sh": "f1aeda1cc45cbe704be72c04ea2dbbc7",
+    "manifests/control.pp": "e69745e84b15a56aef63116021443b16",
+    "manifests/init.pp": "15ae996a780a284cbec2bc030f3b8e8b",
+    "spec/spec.opts": "a600ded995d948e393fbe2320ba8e51c",
+    "spec/spec_helper.rb": "ca19ec4f451ebc7fdb035b52eae6e909",
+    "templates/ingrsp.rsp.erb": "d13516d97b56e42a984e77a45e85b9b7",
+    "tests/init.pp": "88c33317dc3611623c919e1e19175fa4"
+  },
+  "dependencies": [
+    {
+      "name": "Analytical Labs/common",
+      "versionRequirement": "\u003d\u003d1.0"
+    }
+  ]
+}
