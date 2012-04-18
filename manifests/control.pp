@@ -2,12 +2,19 @@ class vectorwise::control {
 	
 	user{ "ingres":
 		ensure => present,
+		home => "/home/ingres",
 	}
 	
+	file {"/home/ingres":
+		ensure => directory,
+		owner => ingres,
+		group => ingres,
+		require => User["ingres"],
+	}
 	file{ "/home/ingres/ingrsp.rsp":
 		ensure => present,
 		content => template("vectorwise/ingrsp.rsp.erb"),
-		require => User["ingres"],
+		require => File["/home/ingres"],
 	}
 	
 	file{ "/usr/bin/ingbuildscript.sh":
@@ -26,7 +33,7 @@ class vectorwise::control {
 		cwd => "/home/ingres",
 		creates => "/home/ingres/ingresvw-2.0.2-121-NPTL-com-linux-ingbuild-x86_64.tgz",
 		user => "ingres",
-		require => User["ingres"],
+		require => File["/home/ingres"],
 	}
 	
 	file{ "/etc/init.d/vectorwise":
