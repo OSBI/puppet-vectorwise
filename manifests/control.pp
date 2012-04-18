@@ -20,12 +20,13 @@ class vectorwise::control {
 	file{ "/usr/bin/ingbuildscript.sh":
 		ensure => present,
 		source => "puppet:///modules/vectorwise/ingbuildscript.sh",
-		mode => 766,		
+		mode => 777,		
 	}
 	exec { "install_ingres":
     command => "ingbuildscript.sh",
     creates => "/home/ingres/ingres/lib/libx100.so.0",
-    require => [File["/usr/bin/ingbuildscript.sh"], File["/home/ingres/ingrsp.rsp"], Common::Downloadfile["ingresvw-2.0.2-121-NPTL-com-linux-ingbuild-x86_64.tgz"]]
+    require => [File["/usr/bin/ingbuildscript.sh"], File["/home/ingres/ingrsp.rsp"], Common::Downloadfile["ingresvw-2.0.2-121-NPTL-com-linux-ingbuild-x86_64.tgz"]],
+    user => "ingres",
 	}
 	
 	common::downloadfile { "ingresvw-2.0.2-121-NPTL-com-linux-ingbuild-x86_64.tgz" :

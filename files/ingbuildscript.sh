@@ -1,4 +1,5 @@
 #!/bin/bash
+mkdir /home/ingres/ingres
 cd /tmp
 tar xvfz /home/ingres/ingresvw-2.0.2-121-NPTL-com-linux-ingbuild-x86_64.tgz
 cd /home/ingres/ingres
