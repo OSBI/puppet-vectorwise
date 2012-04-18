@@ -46,6 +46,8 @@ class vectorwise::control {
 	service{ "vectorwise":
 		ensure => running,
 		enable => true,
+		hasstatus => true,
+		hasrestart => true,
 		require => [Exec["install_ingres"], File["/etc/init.d/vectorwise"]],
 	}
 }
