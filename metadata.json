@@ -13,6 +13,7 @@
     "files/ingbuildscript.sh": "426e5edde1f599935af611938458ca64",
     "files/vectorwise_init": "c28cbcb93b3216f40db7747e5b42a76a",
     "manifests/control.pp": "c46c00c55705f84dff873f1166ad74a8",
+    "manifests/database.pp": "5c8d834780fea5a622948a568ef2bb11",
     "manifests/init.pp": "15ae996a780a284cbec2bc030f3b8e8b",
     "spec/spec.opts": "a600ded995d948e393fbe2320ba8e51c",
     "spec/spec_helper.rb": "ca19ec4f451ebc7fdb035b52eae6e909",
