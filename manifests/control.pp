@@ -6,7 +6,7 @@ class vectorwise::control {
 	
 	file{ "/home/ingres/ingrsp.rsp":
 		ensure => present,
-		content => template("ingrsp.rsp.erb"),
+		content => template("vectorwise/ingrsp.rsp.erb"),
 		require => User["ingres"],
 	}
 	
