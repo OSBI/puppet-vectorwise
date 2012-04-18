@@ -1,5 +1,5 @@
 #!/bin/sh
-set -e
+#set -e
 
 ### BEGIN INIT INFO
 # Provides:             vectorwise
@@ -12,39 +12,142 @@ set -e
 # Short-Description:    Vectorwise server
 ### END INIT INFO
 
+. /lib/lsb/init-functions
 
-# Start the service FOO
+SHUTDOWN_WAIT=30
+export VECTORWISE_PID=/var/run/vectorwise.pid
+
+# For SELinux we need to use 'runuser' not 'su'
+if [ -x "/sbin/runuser" ]; then
+    SU="/sbin/runuser"
+else
+    SU="su"
+fi
+
+
 start() {
-        exec su -c "II_SYSTEM=/home/ingres PATH=$PATH:/home/ingres/ingres/bin:/home/ingres/ingres/utility ingstart" ingres
-        ### Create the lock file ###
-        touch /var/lock/subsys/FOO
-        success $"FOO server startup"
-        echo
+  isrunning
+  if [ "$?" = 0 ]; then
+    echo "vectorwise is already running"
+    return 0
+  fi
+
+  # Change directory to prevent path problems
+  cd /home/ingres
+
+  # Remove pidfile if still around
+  test -f $VECTORWISE_PID && rm -f $VECTORWISE_PID
+echo "starting"
+  $SU -c "II_SYSTEM=/home/ingres PATH=$PATH:/home/ingres/ingres/bin:/home/ingres/ingres/utility ingstart" ingres
 }
-# Restart the service FOO
+
 stop() {
-        exec su -c "II_SYSTEM=/home/ingres PATH=$PATH:/home/ingres/ingres/bin:/home/ingres/ingres/utility ingstop" ingres
-        ### Now, delete the lock file ###
-        rm -f /var/lock/subsys/FOO
-        echo
+  isrunning
+
+  if [ "$?" = 1 ]; then
+    echo "vectorwise already stopped"
+    rm -f $VECTORWISE_PID # remove pidfile if still around
+    return 0
+  fi
+
+  echo -n "Waiting for vectorwise to exit (${SHUTDOWN_WAIT} sec.): "
+
+  count=0
+  until [ "$pid" = "" ] || [ $count -gt $SHUTDOWN_WAIT ]; do
+    $SU -c "II_SYSTEM=/home/ingres PATH=$PATH:/home/ingres/ingres/bin:/home/ingres/ingres/utility ingstop" ingres
+    findpid
+
+    echo -n "."
+    sleep 3
+    count=$((count+3))
+  done
+
+  echo ""
+
+  if [ "$count" -gt "$SHUTDOWN_WAIT" ]; then
+    echo "Forcing vectorwise to stop"
+    /bin/kill -9 $pid && sleep 5
+  fi
+
+  # check if tomcat is still around, this will be our exit status
+  ! isrunning
 }
-### main logic ###
+
+findpid() {
+  pid=""
+  pid=$(pgrep -U ingres -f "iigcc")
+
+  # validate output of pgrep
+  if ! [ "$pid" = "" ] && ! [ "$pid" -gt 0 ]; then
+    log_failure_msg "Unable to determine if vectorwise is running"
+    exit 1
+  fi
+}
+
+isrunning() {
+  findpid
+
+  if [ "$pid" = "" ]; then
+echo "pid not found"
+    return 1
+  elif [ "$pid" -gt 0 ]; then
+echo "pid found"
+    return 0
+  fi
+}
+
 case "$1" in
   start)
-        start
-        ;;
+    start
+    RETVAL=$?
+
+    if [ "$RETVAL" = 0 ]; then
+      log_success_msg "Started vectorwise"
+    else
+      log_failure_msg "Not able to start vectorwise"
+    fi
+    ;;
+
   stop)
-        stop
-        ;;
+    stop
+    RETVAL=$?
+
+    if [ "$RETVAL" = 0 ]; then
+      log_success_msg "Stopped vectorwise"
+    else
+      log_failure_msg "Not able to stop vectorwise"
+    fi
+  ;;
+  
+  restart)
+    stop
+    sleep 5
+    start
+    RETVAL=$?
+
+    if [ "$RETVAL" = 0 ]; then
+      log_success_msg "Restarted vectorwise"
+    else
+      log_failure_msg "Not able to restart vectorwise"
+    fi
+  ;;
+
   status)
-        status FOO
-        ;;
-  restart|reload|condrestart)
-        stop
-        start
-        ;;
+    isrunning
+    RETVAL=$?
+
+    if [ "$RETVAL" = 0 ]; then
+      echo "vectorwise (pid $pid) is running..."
+    else
+      echo "vectorwise is stopped"
+      RETVAL=3
+    fi
+  ;;
+
   *)
-        echo $"Usage: $0 {start|stop|restart|reload|status}"
-        exit 1
-esac
-exit 0
+    echo "Usage: $0 {start|stop|restart|status}."
+  ;;
+
+  esac
+
+exit $RETVAL
