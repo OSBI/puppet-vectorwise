@@ -1,0 +1,54 @@
+#!/bin/sh
+set -e
+
+### BEGIN INIT INFO
+# Provides:             vectorwise
+# Required-Start:       $local_fs $remote_fs $network $time
+# Required-Stop:        $local_fs $remote_fs $network $time
+# Should-Start:         $syslog
+# Should-Stop:          $syslog
+# Default-Start:        2 3 4 5
+# Default-Stop:         0 1 6
+# Short-Description:    Vectorwise RDBMS server
+### END INIT INFO
+
+# Get function from functions library
+. /etc/init.d/functions
+
+# Start the service FOO
+start() {
+        initlog -c "echo -n Starting FOO server: "
+        exec su -c "II_SYSTEM=/home/ingres PATH=$PATH:/home/ingres/ingres/bin:/home/ingres/ingres/utility ingstart" ingres
+        ### Create the lock file ###
+        touch /var/lock/subsys/FOO
+        success $"FOO server startup"
+        echo
+}
+# Restart the service FOO
+stop() {
+        initlog -c "echo -n Stopping FOO server: "
+        exec su -c "II_SYSTEM=/home/ingres PATH=$PATH:/home/ingres/ingres/bin:/home/ingres/ingres/utility ingstop" ingres
+        ### Now, delete the lock file ###
+        rm -f /var/lock/subsys/FOO
+        echo
+}
+### main logic ###
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  status)
+        status FOO
+        ;;
+  restart|reload|condrestart)
+        stop
+        start
+        ;;
+  *)
+        echo $"Usage: $0 {start|stop|restart|reload|status}"
+        exit 1
+esac
+exit 0

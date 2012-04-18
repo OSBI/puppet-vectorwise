@@ -29,4 +29,15 @@ class vectorwise::control {
 		require => User["ingres"],
 	}
 	
+	file{ "/etc/init.d/vectorwise":
+		ensure => present,
+		source => "puppet:///modules/vectorwise/vectorwise_init",
+		mode => 770,
+	}
+	
+	service{ "vectorwise":
+		ensure => running,
+		enable => true,
+		require => [Exec["install_ingres"], File["/etc/init.d/vectorwise"]],
+	}
 }

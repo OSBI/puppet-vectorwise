@@ -10,8 +10,10 @@
   "checksums": {
     "Modulefile": "1bdd9d892ca05f80fcfd2a703c063383",
     "README": "e36e264043e3ec58b39e9d8ceb69e7c6",
+    "bugg@192.168.1.85": "15fa7063c7b4e0700c790a8d3a543c6a",
     "files/ingbuildscript.sh": "f1aeda1cc45cbe704be72c04ea2dbbc7",
-    "manifests/control.pp": "e69745e84b15a56aef63116021443b16",
+    "files/vectorwise_init": "f31dba27c8a3148f5bec41b83085b5fa",
+    "manifests/control.pp": "acd056697ffe6d98e9eaafac06c753c5",
     "manifests/init.pp": "15ae996a780a284cbec2bc030f3b8e8b",
     "spec/spec.opts": "a600ded995d948e393fbe2320ba8e51c",
     "spec/spec_helper.rb": "ca19ec4f451ebc7fdb035b52eae6e909",
