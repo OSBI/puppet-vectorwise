@@ -1,5 +1,7 @@
 class vectorwise::control {
-	
+	package { "libaio1":
+		ensure => present,
+	}
 	user{ "ingres":
 		ensure => present,
 		home => "/home/ingres",
