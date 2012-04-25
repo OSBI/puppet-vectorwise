@@ -33,7 +33,7 @@ class vectorwise::control {
 	}
 	
 	exec { "sort out passwords":
-    command => "mkvalidpw; touch /etc/passwordset",
+    command => "mkvalidpw ; touch /etc/passwordset",
     creates => "/etc/passwordset",
     require => [File["/usr/bin/ingbuildscript.sh"], File["/home/ingres/ingrsp.rsp"], Common::Downloadfile["ingresvw-2.0.2-121-NPTL-com-linux-ingbuild-x86_64.tgz"]],
     user => "ingres",
