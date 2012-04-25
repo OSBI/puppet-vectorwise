@@ -37,6 +37,9 @@ class vectorwise::control {
     creates => "/etc/passwordset",
     require => [File["/usr/bin/ingbuildscript.sh"], File["/home/ingres/ingrsp.rsp"], Common::Downloadfile["ingresvw-2.0.2-121-NPTL-com-linux-ingbuild-x86_64.tgz"]],
     user => "ingres",
+    path    => "/usr/bin/:/bin/:/home/ingres/ingres/bin:/home/ingres/ingres/utility",
+    environment => "II_SYSTEM=/home/ingres",
+    
 	}
 	
 	common::downloadfile { "ingresvw-2.0.2-121-NPTL-com-linux-ingbuild-x86_64.tgz" :
