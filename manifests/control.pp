@@ -32,6 +32,13 @@ class vectorwise::control {
     user => "ingres",
 	}
 	
+	exec { "sort out passwords":
+    command => "mkvalidpw;touch /etc/passwordset",
+    creates => "/etc/passwordset",
+    require => [File["/usr/bin/ingbuildscript.sh"], File["/home/ingres/ingrsp.rsp"], Common::Downloadfile["ingresvw-2.0.2-121-NPTL-com-linux-ingbuild-x86_64.tgz"]],
+    user => "ingres",
+	}
+	
 	common::downloadfile { "ingresvw-2.0.2-121-NPTL-com-linux-ingbuild-x86_64.tgz" :
 		site => "http://analytical-labs.com",
 		cwd => "/home/ingres",
@@ -51,6 +58,6 @@ class vectorwise::control {
 		enable => true,
 		hasstatus => true,
 		hasrestart => true,
-		require => [Exec["install_ingres"], File["/etc/init.d/vectorwise"]],
+		require => [Exec["sort out passwords"], File["/etc/init.d/vectorwise"]],
 	}
 }

@@ -12,7 +12,7 @@
     "README": "e36e264043e3ec58b39e9d8ceb69e7c6",
     "files/ingbuildscript.sh": "426e5edde1f599935af611938458ca64",
     "files/vectorwise_init": "c28cbcb93b3216f40db7747e5b42a76a",
-    "manifests/control.pp": "c50dcb38f7cc847f3551a9006b723b28",
+    "manifests/control.pp": "d9d814b46168db83d66cc2666502aa24",
     "manifests/database.pp": "1323e5f3df3c626030e239bf6f069662",
     "manifests/init.pp": "15ae996a780a284cbec2bc030f3b8e8b",
     "spec/spec.opts": "a600ded995d948e393fbe2320ba8e51c",
