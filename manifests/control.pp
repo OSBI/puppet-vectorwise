@@ -61,6 +61,6 @@ class vectorwise::control {
 		enable => true,
 		hasstatus => true,
 		hasrestart => true,
-		require => [Exec["sort out passwords"], File["/etc/init.d/vectorwise"]],
+		require => [Exec["sort out passwords"], File["/etc/init.d/vectorwise"], Package["libaio1"]],
 	}
 }
