@@ -5,7 +5,7 @@ class vectorwise::control {
 	user{ "ingres":
 		ensure => present,
 		home => "/home/ingres",
-		password => '$6$0phZG4.3$3Ep9Rl.A3KcRPqPtVbGbwM5sSNG4DAvDAdjlqL8dbal6AsGQP6qccTNUmdDUpY251FRtL7p0GbkuOFAx7p4gW1',
+		password => '1234',
 	}
 	
 	file {"/home/ingres":
