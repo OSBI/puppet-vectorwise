@@ -2,7 +2,7 @@ class vectorwise::control {
 	package { "libaio1":
 		ensure => present,
 	}
-	
+	notify{ "Vectorwise exists equals $::vectorwise_exists":}
 	if $::vectorwise_exists == "true" {
 	  $vectorwise_password = $::vw_password
 	  
