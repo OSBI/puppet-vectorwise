@@ -3,7 +3,7 @@ class vectorwise::control {
 		ensure => present,
 	}
 	notify{ "Vectorwise exists equals $::vectorwise_exists":}
-	if $::vectorwise_exists == true {
+	if $::vectorwise_exists == "true" {
 	   notify{ "Vectorwise pword $::vw_password":}
 	  $vectorwise_password = $::vw_password
 	  
