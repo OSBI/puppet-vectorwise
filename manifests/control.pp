@@ -3,12 +3,15 @@ class vectorwise::control {
 		ensure => present,
 	}
 	
-	if $vectorwise_exists == "true" {
-	  
+	if $::vectorwise_exists == "true" {
+	  $vectorwise_password = $::vw_password
 	  
 	} else {
 	 $vectorwise_password = generate("/usr/bin/pwgen", 20, 1)
-    user{ "ingres":
+ 
+	}
+	
+	    user{ "ingres":
       ensure => present,
       home => "/home/ingres",
       password => $vectorwise_password,
@@ -16,10 +19,8 @@ class vectorwise::control {
     file {"/home/ingres/.vw":
       ensure => present,
       content => $vectorwise_password,
-    }  
-	}
-	
-	
+    } 
+    
 	file {"/home/ingres":
 		ensure => directory,
 		owner => ingres,
