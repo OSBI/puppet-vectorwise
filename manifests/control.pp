@@ -2,11 +2,23 @@ class vectorwise::control {
 	package { "libaio1":
 		ensure => present,
 	}
-	user{ "ingres":
-		ensure => present,
-		home => "/home/ingres",
-		password => '1234',
+	
+	if $vectorwise_exists == "true" {
+	  
+	  
+	} else {
+	 $vectorwise_password = generate("/usr/bin/pwgen", 20, 1)
+    user{ "ingres":
+      ensure => present,
+      home => "/home/ingres",
+      password => $vectorwise_password,
+    } ->
+    file {"/home/ingres/.vw":
+      ensure => present,
+      content => $vectorwise_password,
+    }  
 	}
+	
 	
 	file {"/home/ingres":
 		ensure => directory,
