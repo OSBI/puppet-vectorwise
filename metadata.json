@@ -13,7 +13,7 @@
     "files/ingbuildscript.sh": "426e5edde1f599935af611938458ca64",
     "files/vectorwise_init": "c28cbcb93b3216f40db7747e5b42a76a",
     "lib/facter/mysql.rb": "a98e9a72640c0ebc9d2c5e3c09f33b5c",
-    "manifests/control.pp": "3de139aad7785fab86b494d9b94a75e7",
+    "manifests/control.pp": "8e222969df7c0d10603dd4877f5d945d",
     "manifests/database.pp": "e8acf36fe2866ed91eddd3a4274beaec",
     "manifests/init.pp": "15ae996a780a284cbec2bc030f3b8e8b",
     "spec/spec.opts": "a600ded995d948e393fbe2320ba8e51c",

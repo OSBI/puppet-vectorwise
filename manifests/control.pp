@@ -10,16 +10,16 @@ class vectorwise::control {
  
 	}
 	
+	    file {"/home/ingres/.vw":
+      ensure => present,
+      content => $vectorwise_password,
+    }-> 
 	    user{ "ingres":
       ensure => present,
       home => "/home/ingres",
-      password => $vectorwise_password,
-    } ->
-    file {"/home/ingres/.vw":
-      ensure => present,
-      content => $vectorwise_password,
+      password => $::vw_password,
     } 
-    
+
 	file {"/home/ingres":
 		ensure => directory,
 		owner => ingres,
