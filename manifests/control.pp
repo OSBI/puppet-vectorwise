@@ -10,22 +10,24 @@ class vectorwise::control {
  
 	}
 	
+	     user{ "ingres":
+      ensure => present,
+      home => "/home/ingres",
+      password => $::vw_password,
+    } ->
+	file {"/home/ingres":
+    ensure => directory,
+    owner => ingres,
+    group => ingres,
+    require => User["ingres"],
+  }->
 	    file {"/home/ingres/.vw":
       ensure => present,
       content => $vectorwise_password,
     }-> 
-	    user{ "ingres":
-      ensure => present,
-      home => "/home/ingres",
-      password => $::vw_password,
-    } 
 
-	file {"/home/ingres":
-		ensure => directory,
-		owner => ingres,
-		group => ingres,
-		require => User["ingres"],
-	}
+
+	
 	file{ "/home/ingres/ingrsp.rsp":
 		ensure => present,
 		content => template("vectorwise/ingrsp.rsp.erb"),
