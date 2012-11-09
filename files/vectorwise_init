@@ -33,12 +33,12 @@ start() {
   fi
 
   # Change directory to prevent path problems
-  cd /home/ingres
+  cd /mnt/ingres
 
   # Remove pidfile if still around
   test -f $VECTORWISE_PID && rm -f $VECTORWISE_PID
 echo "starting"
-  $SU -c "II_SYSTEM=/home/ingres PATH=$PATH:/home/ingres/ingres/bin:/home/ingres/ingres/utility ingstart" ingres
+  $SU -c "II_SYSTEM=/mnt/ingres PATH=$PATH:/mnt/ingres/ingres/bin:/mnt/ingres/ingres/utility ingstart" ingres
 }
 
 stop() {
@@ -54,7 +54,7 @@ stop() {
 
   count=0
   until [ "$pid" = "" ] || [ $count -gt $SHUTDOWN_WAIT ]; do
-    $SU -c "II_SYSTEM=/home/ingres PATH=$PATH:/home/ingres/ingres/bin:/home/ingres/ingres/utility ingstop" ingres
+    $SU -c "II_SYSTEM=/mnt/ingres PATH=$PATH:/mnt/ingres/ingres/bin:/mnt/ingres/ingres/utility ingstop" ingres
     findpid
 
     echo -n "."

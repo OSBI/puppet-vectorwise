@@ -14,8 +14,13 @@ class vectorwise::control {
       ensure => present,
       home => "/home/ingres",
       password => $::vw_password,
-    } ->
-	file {"/home/ingres":
+    } ->  file {"/home/ingres":
+    ensure => directory,
+    owner => ingres,
+    group => ingres,
+    require => User["ingres"],
+  }->
+	file {"/mnt/ingres":
     ensure => directory,
     owner => ingres,
     group => ingres,
@@ -28,10 +33,10 @@ class vectorwise::control {
 
 
 	
-	file{ "/home/ingres/ingrsp.rsp":
+	file{ "/mnt/ingres/ingrsp.rsp":
 		ensure => present,
 		content => template("vectorwise/ingrsp.rsp.erb"),
-		require => File["/home/ingres"],
+		require => File["/mnt/ingres"],
 	}
 	
 	file{ "/usr/bin/ingbuildscript.sh":
@@ -41,27 +46,27 @@ class vectorwise::control {
 	}
 	exec { "install_ingres":
     command => "ingbuildscript.sh",
-    creates => "/home/ingres/ingres/lib/libx100.so.0",
-    require => [File["/usr/bin/ingbuildscript.sh"], File["/home/ingres/ingrsp.rsp"], Common::Downloadfile["ingresvw-2.0.2-121-NPTL-com-linux-ingbuild-x86_64.tgz"]],
+    creates => "/mnt/ingres/ingres/lib/libx100.so.0",
+    require => [File["/usr/bin/ingbuildscript.sh"], File["/mnt/ingres/ingrsp.rsp"], Common::Downloadfile["ingresvw-2.0.2-121-NPTL-com-linux-ingbuild-x86_64.tgz"]],
     user => "ingres",
 	}
 	
 	exec { "sort out passwords":
-    command => "/home/ingres/ingres/bin/mkvalidpw ; touch /etc/passwordset",
+    command => "/mnt/ingres/ingres/bin/mkvalidpw ; touch /etc/passwordset",
     creates => "/etc/passwordset",
-    require => [File["/usr/bin/ingbuildscript.sh"], File["/home/ingres/ingrsp.rsp"], Common::Downloadfile["ingresvw-2.0.2-121-NPTL-com-linux-ingbuild-x86_64.tgz"], Exec["install_ingres"]],
+    require => [File["/usr/bin/ingbuildscript.sh"], File["/mnt/ingres/ingrsp.rsp"], Common::Downloadfile["ingresvw-2.0.2-121-NPTL-com-linux-ingbuild-x86_64.tgz"], Exec["install_ingres"]],
     user => "root",
-    path    => "/usr/bin/:/bin/:/home/ingres/ingres/bin:/home/ingres/ingres/utility",
-    environment => "II_SYSTEM=/home/ingres",
+    path    => "/usr/bin/:/bin/:/mnt/ingres/ingres/bin:/mnt/ingres/ingres/utility",
+    environment => "II_SYSTEM=/mnt/ingres",
     
 	}
 	
 	common::downloadfile { "ingresvw-2.0.2-121-NPTL-com-linux-ingbuild-x86_64.tgz" :
 		site => "http://analytical-labs.com",
-		cwd => "/home/ingres",
-		creates => "/home/ingres/ingresvw-2.0.2-121-NPTL-com-linux-ingbuild-x86_64.tgz",
+		cwd => "/mnt/ingres",
+		creates => "/mnt/ingres/ingresvw-2.0.2-121-NPTL-com-linux-ingbuild-x86_64.tgz",
 		user => "ingres",
-		require => File["/home/ingres"],
+		require => File["/mnt/ingres"],
 	}
 	
 	file{ "/etc/init.d/vectorwise":

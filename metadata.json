@@ -10,15 +10,15 @@
   "checksums": {
     "Modulefile": "1bdd9d892ca05f80fcfd2a703c063383",
     "README": "e36e264043e3ec58b39e9d8ceb69e7c6",
-    "files/ingbuildscript.sh": "426e5edde1f599935af611938458ca64",
-    "files/vectorwise_init": "c28cbcb93b3216f40db7747e5b42a76a",
+    "files/ingbuildscript.sh": "93e9d563058dec28d46f23822ce184c1",
+    "files/vectorwise_init": "bebc986e306b43c92b98be78dd3c1382",
     "lib/facter/mysql.rb": "a98e9a72640c0ebc9d2c5e3c09f33b5c",
-    "manifests/control.pp": "efddbe80cb8cd6696ce8413be04836f6",
-    "manifests/database.pp": "e8acf36fe2866ed91eddd3a4274beaec",
+    "manifests/control.pp": "0af73f7707a65b5ba052fe17e84aba06",
+    "manifests/database.pp": "35e326fdf4eae18687687e041c57ed7f",
     "manifests/init.pp": "15ae996a780a284cbec2bc030f3b8e8b",
     "spec/spec.opts": "a600ded995d948e393fbe2320ba8e51c",
     "spec/spec_helper.rb": "ca19ec4f451ebc7fdb035b52eae6e909",
-    "templates/ingrsp.rsp.erb": "d13516d97b56e42a984e77a45e85b9b7",
+    "templates/ingrsp.rsp.erb": "4e3ff11c5608594f9bfcd5222b8b7061",
     "tests/init.pp": "88c33317dc3611623c919e1e19175fa4"
   },
   "dependencies": [

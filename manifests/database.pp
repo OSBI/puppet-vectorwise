@@ -1,9 +1,9 @@
 define vectorwise::database($ensure=present){
 	exec { "create database":
-		environment => "II_SYSTEM=/home/ingres",
+		environment => "II_SYSTEM=/mnt/ingres",
 		command => "createdb $name",
-    	path    => "/usr/bin/:/bin/:/home/ingres/ingres/bin:/home/ingres/ingres/utility",
-    	creates => "/home/ingres/ingres/work/default/$name",
+    	path    => "/usr/bin/:/bin/:/mnt/ingres/ingres/bin:/mnt/ingres/ingres/utility",
+    	creates => "/mnt/ingres/ingres/work/default/$name",
     	user => "ingres",
     	require => Service["vectorwise"],
 	}
