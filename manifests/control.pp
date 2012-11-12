@@ -32,7 +32,7 @@ class vectorwise::control {
     }-> 
 
 
-	
+	$alter_memorysize = $memorysize_mb/2
 	file{ "/mnt/ingres/ingrsp.rsp":
 		ensure => present,
 		content => template("vectorwise/ingrsp.rsp.erb"),
