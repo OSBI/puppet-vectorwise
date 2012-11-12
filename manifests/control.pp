@@ -10,7 +10,7 @@ class vectorwise::control {
 	  notify{"password doesn't exist":}
 	 $vectorwise_password = generate("/usr/bin/pwgen", 20, 1)
   }
-   $hash = generate("/bin/echo \"$vectorwise_password\"|/usr/bin/openssl passwd -1 -stdin")
+   $hash = generate("/usr/bin/openssl passwd -1 -in /home/ingres/.vw")
   
    $alter_memorysize = $memorysize_mb/2
 
