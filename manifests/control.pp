@@ -12,14 +12,11 @@ class vectorwise::control {
  
 	}
 	 $alter_memorysize = $memorysize_mb/2
-
+$hash = sha1("${vectorwise_password}")
 	     user{ "ingres":
       ensure => present,
-      home => "/home/ingres"
-    } ->
-    exec {
-      "usermod -p '$vectorwise_password' ingres":
-      #onlyif => "egrep -q '^ingres:\*:' /etc/shadow",
+      home => "/home/ingres",
+      password => "$hash"
     }
     ->  
     file {"/home/ingres":
