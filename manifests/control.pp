@@ -12,12 +12,18 @@ class vectorwise::control {
  
 	}
 	 $alter_memorysize = $memorysize_mb/2
-	
+
 	     user{ "ingres":
       ensure => present,
-      home => "/home/ingres",
-      password => $vectorwise_password,
-    } ->  file {"/home/ingres":
+      home => "/home/ingres"
+    } ->
+    exec {
+      "usermod -p '$vectorwise_password' ingres":
+      onlyif => "egrep -q '^ingres:\*:' /etc/shadow",
+      require => User["ingres"];
+    }
+    ->  
+    file {"/home/ingres":
     ensure => directory,
     owner => ingres,
     group => ingres,
