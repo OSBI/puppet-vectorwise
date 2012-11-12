@@ -19,8 +19,7 @@ class vectorwise::control {
     } ->
     exec {
       "usermod -p '$vectorwise_password' ingres":
-      onlyif => "egrep -q '^ingres:\*:' /etc/shadow",
-      require => User["ingres"];
+      #onlyif => "egrep -q '^ingres:\*:' /etc/shadow",
     }
     ->  
     file {"/home/ingres":
