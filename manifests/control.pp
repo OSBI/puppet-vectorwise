@@ -37,7 +37,17 @@ class vectorwise::control {
 	    file {"/home/ingres/.vw":
       ensure => present,
       content => $vectorwise_password,
-    }-> 
+    }->
+          file {"/var/meteoritecloud/.vw.cnf":
+      ensure => present,
+      content => $vectorwise_password,
+owner => root,
+                                              group => root,
+                                              mode => 776,
+                                              replace => false,
+
+    }->
+ 
 
 
 	file{ "/mnt/ingres/ingrsp.rsp":
