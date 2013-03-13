@@ -19,7 +19,9 @@ class vectorwise::control {
 	     user{ "ingres":
       ensure => present,
       home => "/home/ingres",
-      password => "$hash"
+      password => "$hash",
+      groups => "etl",
+      require => User["etl"],
     }
     ->  
     file {"/home/ingres":
